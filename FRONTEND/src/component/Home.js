@@ -14,12 +14,6 @@ const param=new URLSearchParams(location.search);
 const username=param.get('username')
 const useremail=param.get('mail')
 
-  // const [usernames,setusername]=useState('');
-  // const [useremails,setuseremail]=useState('')
-
-  // setusername(username)
-  // setuseremail(useremail)
-
   const redirectURL = `../cart?username=${username}&mail=${useremail}`;
 
   const navigate=useNavigate();
@@ -66,7 +60,8 @@ const useremail=param.get('mail')
   }
   
   let cont;
-  const twoitemfilter=useMemo(()=>{
+  
+  useMemo(()=>{
     if(mobileshow===true && ramshow===true)
     {
       if(brand!=='' && size!=='')
@@ -196,7 +191,6 @@ const useremail=param.get('mail')
   },[brand,size])
   
   
-  
   const desktopclick=()=>{
     setdesktopshow(!desktopshow);
   }
@@ -213,8 +207,7 @@ const useremail=param.get('mail')
     setramshow(!ramshow)
   }
   
-  
-  const datafilter=useMemo(()=>{
+  useMemo(()=>{
     if(laptopshow===false&&desktopshow===false &&mobileshow===false )
     {
      const items=list.filter(item=>{
@@ -297,9 +290,7 @@ const useremail=param.get('mail')
   
   },[mobileshow,laptopshow,desktopshow,ramshow])
 
-
-
-  const userddata=useMemo(()=>{
+  useMemo(()=>{
     axios.get(`http://localhost:8000/getitem?useremail=${useremail}`).then(items=>{console.log(items.data);setuseritem(items.data)}).catch(err=>{console.log(err)})
 
   },[insert,deletes])
@@ -307,9 +298,7 @@ const useremail=param.get('mail')
  const cartitemfilter=async (item,id)=>{
   if(!(useritem.find(items=>items.id===id)))
   {
-    // setcart([...cart, item]);
-    // const item1=`useremail:${useremail}`
-    // item.push(item1)
+ 
   await axios.post(`http://localhost:8000/setitem?useremail=${useremail}`,item).then(item=>{
       console.log(item.data)
       setinsert(item.data)
@@ -320,8 +309,7 @@ const useremail=param.get('mail')
   }
 else
 {
-// const arr = cart.filter((item) => item.id !== id);
-// setcart(arr);
+
 await axios.delete(`http://localhost:8000/deleteitem?useremail=${useremail}&&it=${id}`).then(item=>{
   console.log(item.data);
   setdeletes(item.data)
